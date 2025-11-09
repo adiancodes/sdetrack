@@ -1,0 +1,161 @@
+:root {
+  --bg-dark: #141414;
+  --bg-card: #1f1f1f;
+  --text-muted: #8b8b8b;
+  --accent-easy: #0f5132;
+  --accent-medium: #6c757d;
+  --accent-hard: #6f1d1b;
+}
+
+body {
+  background-color: var(--bg-dark);
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  /* Site-wide background image (stars) with subtle dark overlay for readability */
+  --site-bg: url('../img/stars.jpg');
+  background-image: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15)), var(--site-bg);
+  background-repeat: no-repeat, no-repeat;
+  background-attachment: fixed, fixed; /* gentle parallax */
+  background-position: center center, center center;
+  background-size: cover, cover; /* cover the entire viewport */
+}
+
+.card.bg-secondary-subtle {
+  /* Slightly translucent for readability over photo backgrounds */
+  background-color: rgba(31, 31, 31, 0.78) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(2px) saturate(120%);
+}
+
+.badge.easy {
+  background-color: #198754;
+}
+
+.badge.medium {
+  background-color: #ffc107;
+  color: #000;
+}
+
+.badge.hard {
+  background-color: #dc3545;
+}
+
+/* Make striped rows opaque for better readability over background image */
+.table-dark.table-striped > tbody > tr:nth-of-type(odd) > * {
+  background-color: #181818 !important;
+}
+
+.table-dark.table-striped > tbody > tr:nth-of-type(even) > * {
+  background-color: #202020 !important;
+}
+
+.table-dark td,
+.table-dark th {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.status-checkbox {
+  cursor: pointer;
+  transform: scale(1.2);
+}
+
+/* Progress cards: improve contrast */
+.card [data-progress-bar] {
+  background-color: #ffffff !important; /* white bar color */
+}
+
+.card .progress {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+}
+
+.dashboard-legend .badge {
+  vertical-align: middle;
+}
+
+.dashboard-legend .count {
+  margin-left: 6px;
+  color: #ddd;
+}
+
+section[data-day] {
+  border-radius: 14px;
+  padding: 16px;
+  /* Opaque dark panel for readability over site background */
+  background-color: #101010; /* was translucent */
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+section[data-day] + section[data-day] {
+  margin-top: 24px;
+}
+
+/* Day toggle button */
+.day-section .day-toggle {
+  background: #1f1f1f;
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 12px 16px;
+  border-radius: 10px;
+  color: #f5f5f5;
+  font-weight: 600;
+  transition: background-color .15s, border-color .15s;
+}
+
+.day-section .day-toggle:hover {
+  background: #262626;
+  border-color: rgba(255,255,255,0.15);
+}
+
+.day-section .day-toggle:focus { outline: 2px solid #444; outline-offset: 2px; }
+
+.day-section .day-toggle .chevron {
+  --size: 10px;
+  display: inline-block;
+  width: var(--size);
+  height: var(--size);
+  border-right: 2px solid #bbb;
+  border-bottom: 2px solid #bbb;
+  transform: rotate(-45deg);
+  transition: transform .25s;
+  margin-right: 4px;
+  margin-left: 4px;
+}
+
+.day-section .day-toggle[aria-expanded="true"] .chevron {
+  transform: rotate(45deg);
+}
+
+.day-section [data-day-body] {
+  padding-top: 4px;
+  animation: fadeSlide .25s ease;
+}
+
+@keyframes fadeSlide {
+  from {opacity: 0; transform: translateY(-4px);} to {opacity: 1; transform: translateY(0);}
+}
+
+/* Ensure the surrounding panel stays opaque */
+.day-section { padding: 8px 8px 16px; background-color: #101010; box-shadow: 0 8px 24px rgba(0,0,0,0.35); border-radius: 14px; }
+
+.navbar-brand {
+  letter-spacing: 0.08em;
+}
+
+/* Per-card background image (instead of whole dashboard) */
+.card[data-user-card] {
+  position: relative;
+  overflow: hidden;
+}
+
+.card[data-user-card]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.65)), var(--card-bg);
+  background-size: cover;
+  background-position: center;
+  filter: saturate(110%);
+  z-index: 0;
+}
+
+.card[data-user-card] > .card-body { position: relative; z-index: 1; }

@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+.env
+.venv/
+.venv*/
+*.egg-info/
+build/
+dist/
+
+# VCS
+.git/
+.gitignore
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Data/Cache
+node_modules/
+app/static/data/*.json
+!app/static/data/striver_sde_sheet.json.example

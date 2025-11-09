@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: sdetrack
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn --worker-class eventlet -w 1 -b 0.0.0.0:$PORT wsgi:app
+    envVars:
+      - key: MONGO_URI
+        sync: false
+      - key: MONGO_DB_NAME
+        value: sdetrack
+      - key: MONGO_COLLECTION_NAME
+        value: questions
+      - key: USER_ONE_NAME
+        value: Me
+      - key: USER_TWO_NAME
+        value: Didi

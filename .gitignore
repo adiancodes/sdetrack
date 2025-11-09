@@ -1,0 +1,19 @@
+.venv/
+.env
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node
+node_modules/
+
+# Local data not for repo
+app/static/data/striver_sde_sheet.json
