@@ -50,6 +50,7 @@ def load_questions(file_path: Path) -> list[dict]:
 def build_document(raw: dict, index: int, preserve_status: bool) -> dict:
     status = raw.get("status") if preserve_status else None
     return {
+        "category": raw.get("category", "striver"),
         "day": raw.get("day", 0),
         "day_label": raw.get("day_label") or f"Day {raw.get('day', 0)}",
         "order": raw.get("order", index + 1),
@@ -83,7 +84,7 @@ def main() -> None:
     if not args.preserve_status:
         collection.delete_many({})
     for doc in documents:
-        query = {"day": doc["day"], "title": doc["title"]}
+        query = {"category": doc["category"], "day": doc["day"], "title": doc["title"]}
         collection.update_one(query, {"$set": doc}, upsert=True)
 
     print(f"Upserted {len(documents)} questions into {settings.mongo_collection} collection.")

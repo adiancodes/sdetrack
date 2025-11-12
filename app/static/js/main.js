@@ -1,5 +1,6 @@
 (() => {
-  const socket = io();
+  const category = (window.APP_CATEGORY || 'striver').toLowerCase();
+  const socket = io({ query: { category } });
 
   const getRowByQuestionId = (questionId) =>
     document.querySelector(`tr[data-question-id="${questionId}"]`);
@@ -127,6 +128,7 @@
       question_id: questionId,
       user_field: userField,
       completed: checkbox.checked,
+      category,
     });
   };
 
@@ -134,18 +136,24 @@
     checkbox.addEventListener('change', handleCheckboxChange);
   });
 
-  socket.on('status_updated', ({ question, user_field: userField }) => {
+  socket.on('status_updated', ({ question, user_field: userField, category: updateCategory }) => {
     if (!question || !userField) {
+      return;
+    }
+    if (updateCategory && updateCategory !== category) {
       return;
     }
     updateCheckboxState(question, userField);
   });
 
   socket.on('dashboard_sync', (payload) => {
+    if (payload?.category && payload.category !== category) {
+      return;
+    }
     updateDashboard(payload);
   });
 
-  socket.emit('request_dashboard');
+  socket.emit('request_dashboard', { category });
 })();
 
 // Persist day-wise collapse state (collapsed by default)

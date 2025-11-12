@@ -1,0 +1,382 @@
+[
+  {
+    "day": 1,
+    "day_label": "Pattern 1: Classic Binary Search",
+    "order": 1,
+    "title": "Binary Search",
+    "difficulty": "Easy",
+    "companies": ["Amazon", "Microsoft", "Google"],
+    "key_concept": "Basic template",
+    "practice_link": "https://leetcode.com/problems/binary-search/"
+  },
+  {
+    "day": 1,
+    "day_label": "Pattern 1: Classic Binary Search",
+    "order": 2,
+    "title": "Search Insert Position",
+    "difficulty": "Easy",
+    "companies": ["Amazon", "Microsoft", "Apple"],
+    "key_concept": "Find insert index",
+    "practice_link": "https://leetcode.com/problems/search-insert-position/"
+  },
+  {
+    "day": 1,
+    "day_label": "Pattern 1: Classic Binary Search",
+    "order": 3,
+    "title": "First Bad Version",
+    "difficulty": "Easy",
+    "companies": ["Facebook", "Google", "Amazon"],
+    "key_concept": "Minimize API calls",
+    "practice_link": "https://leetcode.com/problems/first-bad-version/"
+  },
+  {
+    "day": 1,
+    "day_label": "Pattern 1: Classic Binary Search",
+    "order": 4,
+    "title": "Square Root",
+    "difficulty": "Easy",
+    "companies": ["Amazon", "Microsoft", "Bloomberg"],
+    "key_concept": "Search on answer",
+    "practice_link": "https://leetcode.com/problems/sqrtx/"
+  },
+  {
+    "day": 1,
+    "day_label": "Pattern 1: Classic Binary Search",
+    "order": 5,
+    "title": "Valid Perfect Square",
+    "difficulty": "Easy",
+    "companies": ["LinkedIn", "Google"],
+    "key_concept": "Integer square validation",
+    "practice_link": "https://leetcode.com/problems/valid-perfect-square/"
+  },
+  {
+    "day": 2,
+    "day_label": "Pattern 2: Find First/Last Occurrence",
+    "order": 1,
+    "title": "Find First and Last Position of Element",
+    "difficulty": "Medium",
+    "companies": ["Facebook", "Amazon", "Google", "Microsoft"],
+    "key_concept": "Left & right boundary",
+    "practice_link": "https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/"
+  },
+  {
+    "day": 2,
+    "day_label": "Pattern 2: Find First/Last Occurrence",
+    "order": 2,
+    "title": "First Bad Version",
+    "difficulty": "Easy",
+    "companies": ["Facebook", "Google"],
+    "key_concept": "Find first occurrence",
+    "practice_link": "https://leetcode.com/problems/first-bad-version/"
+  },
+  {
+    "day": 2,
+    "day_label": "Pattern 2: Find First/Last Occurrence",
+    "order": 3,
+    "title": "Find Smallest Letter Greater Than Target",
+    "difficulty": "Easy",
+    "companies": ["LinkedIn", "Google"],
+    "key_concept": "Ceiling element",
+    "practice_link": "https://leetcode.com/problems/find-smallest-letter-greater-than-target/"
+  },
+  {
+    "day": 2,
+    "day_label": "Pattern 2: Find First/Last Occurrence",
+    "order": 4,
+    "title": "Single Element in Sorted Array",
+    "difficulty": "Medium",
+    "companies": ["Amazon", "Google", "Facebook"],
+    "key_concept": "XOR property with BS",
+    "practice_link": "https://leetcode.com/problems/single-element-in-a-sorted-array/"
+  },
+  {
+    "day": 3,
+    "day_label": "Pattern 3: Search in Rotated/Modified Arrays",
+    "order": 1,
+    "title": "Search in Rotated Sorted Array",
+    "difficulty": "Medium",
+    "companies": ["Facebook", "Amazon", "Microsoft", "Google", "Apple"],
+    "key_concept": "Identify sorted half",
+    "practice_link": "https://leetcode.com/problems/search-in-rotated-sorted-array/"
+  },
+  {
+    "day": 3,
+    "day_label": "Pattern 3: Search in Rotated/Modified Arrays",
+    "order": 2,
+    "title": "Search in Rotated Sorted Array II",
+    "difficulty": "Medium",
+    "companies": ["Facebook", "Amazon", "LinkedIn"],
+    "key_concept": "Handle duplicates",
+    "practice_link": "https://leetcode.com/problems/search-in-rotated-sorted-array-ii/"
+  },
+  {
+    "day": 3,
+    "day_label": "Pattern 3: Search in Rotated/Modified Arrays",
+    "order": 3,
+    "title": "Find Minimum in Rotated Sorted Array",
+    "difficulty": "Medium",
+    "companies": ["Amazon", "Microsoft", "Google"],
+    "key_concept": "Find pivot",
+    "practice_link": "https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/"
+  },
+  {
+    "day": 3,
+    "day_label": "Pattern 3: Search in Rotated/Modified Arrays",
+    "order": 4,
+    "title": "Find Minimum in Rotated Sorted Array II",
+    "difficulty": "Hard",
+    "companies": ["Facebook", "Microsoft"],
+    "key_concept": "Duplicates handling",
+    "practice_link": "https://leetcode.com/problems/find-minimum-in-rotated-sorted-array-ii/"
+  },
+  {
+    "day": 3,
+    "day_label": "Pattern 3: Search in Rotated/Modified Arrays",
+    "order": 5,
+    "title": "Find Peak Element",
+    "difficulty": "Medium",
+    "companies": ["Google", "Facebook", "Microsoft", "Amazon"],
+    "key_concept": "Local maxima",
+    "practice_link": "https://leetcode.com/problems/find-peak-element/"
+  },
+  {
+    "day": 4,
+    "day_label": "Pattern 4: Search in 2D Matrix",
+    "order": 1,
+    "title": "Search a 2D Matrix",
+    "difficulty": "Medium",
+    "companies": ["Amazon", "Microsoft", "Google", "Apple"],
+    "key_concept": "Treat as 1D array",
+    "practice_link": "https://leetcode.com/problems/search-a-2d-matrix/"
+  },
+  {
+    "day": 4,
+    "day_label": "Pattern 4: Search in 2D Matrix",
+    "order": 2,
+    "title": "Search a 2D Matrix II",
+    "difficulty": "Medium",
+    "companies": ["Amazon", "Google", "Apple", "Facebook"],
+    "key_concept": "Staircase search",
+    "practice_link": "https://leetcode.com/problems/search-a-2d-matrix-ii/"
+  },
+  {
+    "day": 4,
+    "day_label": "Pattern 4: Search in 2D Matrix",
+    "order": 3,
+    "title": "Kth Smallest Element in Sorted Matrix",
+    "difficulty": "Medium",
+    "companies": ["Facebook", "Google", "Amazon"],
+    "key_concept": "Binary search on value",
+    "practice_link": "https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/"
+  },
+  {
+    "day": 5,
+    "day_label": "Pattern 5: Binary Search on Answer",
+    "order": 1,
+    "title": "Koko Eating Bananas",
+    "difficulty": "Medium",
+    "companies": ["Google", "Facebook", "Amazon"],
+    "key_concept": "Minimize eating speed",
+    "practice_link": "https://leetcode.com/problems/koko-eating-bananas/"
+  },
+  {
+    "day": 5,
+    "day_label": "Pattern 5: Binary Search on Answer",
+    "order": 2,
+    "title": "Minimum Number of Days to Make m Bouquets",
+    "difficulty": "Medium",
+    "companies": ["Google", "Amazon"],
+    "key_concept": "Feasibility check",
+    "practice_link": "https://leetcode.com/problems/minimum-number-of-days-to-make-m-bouquets/"
+  },
+  {
+    "day": 5,
+    "day_label": "Pattern 5: Binary Search on Answer",
+    "order": 3,
+    "title": "Capacity To Ship Packages Within D Days",
+    "difficulty": "Medium",
+    "companies": ["Amazon", "Google", "Facebook"],
+    "key_concept": "Minimize capacity",
+    "practice_link": "https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/"
+  },
+  {
+    "day": 5,
+    "day_label": "Pattern 5: Binary Search on Answer",
+    "order": 4,
+    "title": "Split Array Largest Sum",
+    "difficulty": "Hard",
+    "companies": ["Google", "Facebook", "Amazon", "ByteDance"],
+    "key_concept": "Minimize maximum sum",
+    "practice_link": "https://leetcode.com/problems/split-array-largest-sum/"
+  },
+  {
+    "day": 5,
+    "day_label": "Pattern 5: Binary Search on Answer",
+    "order": 5,
+    "title": "Magnetic Force Between Two Balls",
+    "difficulty": "Medium",
+    "companies": ["Google", "Facebook"],
+    "key_concept": "Maximize minimum distance",
+    "practice_link": "https://leetcode.com/problems/magnetic-force-between-two-balls/"
+  },
+  {
+    "day": 5,
+    "day_label": "Pattern 5: Binary Search on Answer",
+    "order": 6,
+    "title": "Aggressive Cows",
+    "difficulty": "Medium",
+    "companies": ["Amazon", "Google", "Microsoft"],
+    "key_concept": "Maximize minimum distance",
+    "practice_link": "https://www.spoj.com/problems/AGGRCOW/"
+  },
+  {
+    "day": 5,
+    "day_label": "Pattern 5: Binary Search on Answer",
+    "order": 7,
+    "title": "Find K-th Smallest Pair Distance",
+    "difficulty": "Hard",
+    "companies": ["Google", "Facebook"],
+    "key_concept": "Count pairs technique",
+    "practice_link": "https://leetcode.com/problems/find-k-th-smallest-pair-distance/"
+  },
+  {
+    "day": 6,
+    "day_label": "Pattern 6: Binary Search with Conditions",
+    "order": 1,
+    "title": "Find the Duplicate Number",
+    "difficulty": "Medium",
+    "companies": ["Amazon", "Microsoft", "Google", "Apple"],
+    "key_concept": "Floyd's + BS variation",
+    "practice_link": "https://leetcode.com/problems/find-the-duplicate-number/"
+  },
+  {
+    "day": 6,
+    "day_label": "Pattern 6: Binary Search with Conditions",
+    "order": 2,
+    "title": "Median of Two Sorted Arrays",
+    "difficulty": "Hard",
+    "companies": ["Google", "Amazon", "Microsoft", "Facebook", "Apple"],
+    "key_concept": "Partition technique",
+    "practice_link": "https://leetcode.com/problems/median-of-two-sorted-arrays/"
+  },
+  {
+    "day": 6,
+    "day_label": "Pattern 6: Binary Search with Conditions",
+    "order": 3,
+    "title": "Kth Smallest Element in BST",
+    "difficulty": "Medium",
+    "companies": ["Amazon", "Google", "Facebook"],
+    "key_concept": "In-order with count",
+    "practice_link": "https://leetcode.com/problems/kth-smallest-element-in-a-bst/"
+  },
+  {
+    "day": 6,
+    "day_label": "Pattern 6: Binary Search with Conditions",
+    "order": 4,
+    "title": "Maximum Value at a Given Index in Bounded Array",
+    "difficulty": "Medium",
+    "companies": ["Google", "Facebook"],
+    "key_concept": "Greedy + BS",
+    "practice_link": "https://leetcode.com/problems/maximum-value-at-a-given-index-in-a-bounded-array/"
+  },
+  {
+    "day": 6,
+    "day_label": "Pattern 6: Binary Search with Conditions",
+    "order": 5,
+    "title": "Minimum Limit of Balls in a Bag",
+    "difficulty": "Medium",
+    "companies": ["Amazon", "Google"],
+    "key_concept": "Binary search on max",
+    "practice_link": "https://leetcode.com/problems/minimum-limit-of-balls-in-a-bag/"
+  },
+  {
+    "day": 7,
+    "day_label": "Pattern 7: Advanced Applications",
+    "order": 1,
+    "title": "Count of Smaller Numbers After Self",
+    "difficulty": "Hard",
+    "companies": ["Google", "Amazon", "Microsoft"],
+    "key_concept": "Modified merge sort",
+    "practice_link": "https://leetcode.com/problems/count-of-smaller-numbers-after-self/"
+  },
+  {
+    "day": 7,
+    "day_label": "Pattern 7: Advanced Applications",
+    "order": 2,
+    "title": "Maximum Average Subarray II",
+    "difficulty": "Hard",
+    "companies": ["Google"],
+    "key_concept": "Binary search on average",
+    "practice_link": "https://leetcode.com/problems/maximum-average-subarray-ii/"
+  },
+  {
+    "day": 7,
+    "day_label": "Pattern 7: Advanced Applications",
+    "order": 3,
+    "title": "Minimize Max Distance to Gas Station",
+    "difficulty": "Hard",
+    "companies": ["Google", "Amazon"],
+    "key_concept": "BS on distance",
+    "practice_link": "https://leetcode.com/problems/minimize-max-distance-to-gas-station/"
+  },
+  {
+    "day": 7,
+    "day_label": "Pattern 7: Advanced Applications",
+    "order": 4,
+    "title": "Cutting Ribbons",
+    "difficulty": "Medium",
+    "companies": ["Google", "Amazon"],
+    "key_concept": "Maximize length",
+    "practice_link": "https://leetcode.com/problems/cutting-ribbons/"
+  },
+  {
+    "day": 7,
+    "day_label": "Pattern 7: Advanced Applications",
+    "order": 5,
+    "title": "Find Right Interval",
+    "difficulty": "Medium",
+    "companies": ["Google", "Facebook"],
+    "key_concept": "BS on intervals",
+    "practice_link": "https://leetcode.com/problems/find-right-interval/"
+  },
+  {
+    "day": 8,
+    "day_label": "Pattern 8: Monotonic Functions & Predicates",
+    "order": 1,
+    "title": "H-Index II",
+    "difficulty": "Medium",
+    "companies": ["Facebook", "Google", "Amazon"],
+    "key_concept": "Citations threshold",
+    "practice_link": "https://leetcode.com/problems/h-index-ii/"
+  },
+  {
+    "day": 8,
+    "day_label": "Pattern 8: Monotonic Functions & Predicates",
+    "order": 2,
+    "title": "Random Pick with Weight",
+    "difficulty": "Medium",
+    "companies": ["Google", "Facebook", "Amazon", "LinkedIn"],
+    "key_concept": "Prefix sum + BS",
+    "practice_link": "https://leetcode.com/problems/random-pick-with-weight/"
+  },
+  {
+    "day": 8,
+    "day_label": "Pattern 8: Monotonic Functions & Predicates",
+    "order": 3,
+    "title": "Arranging Coins",
+    "difficulty": "Easy",
+    "companies": ["Amazon", "Microsoft"],
+    "key_concept": "Arithmetic progression",
+    "practice_link": "https://leetcode.com/problems/arranging-coins/"
+  },
+  {
+    "day": 8,
+    "day_label": "Pattern 8: Monotonic Functions & Predicates",
+    "order": 4,
+    "title": "Longest Increasing Subsequence",
+    "difficulty": "Medium",
+    "companies": ["Amazon", "Google", "Microsoft", "Facebook"],
+    "key_concept": "DP + BS optimization",
+    "practice_link": "https://leetcode.com/problems/longest-increasing-subsequence/"
+  }
+]
