@@ -181,11 +181,7 @@ def ensure_category_seeded(collection, category: str, data_path: Path) -> None:
 
 
 def ensure_contests_seeded(collection, data_path: Path) -> None:
-    """Seed contest tracker entries from JSON if none exist."""
-    existing = collection.count_documents({"category": CONTEST_CATEGORY})
-    if existing:
-        return
-
+    """Ensure contest tracker entries match the JSON seed file."""
     path = Path(data_path)
     if not path.exists():
         raise FileNotFoundError(f"Contest seed file not found: {path}")
@@ -196,32 +192,45 @@ def ensure_contests_seeded(collection, data_path: Path) -> None:
     if not isinstance(records, list):
         raise ValueError("Contest seed file must be a list of contest entries.")
 
+    valid_titles = set()
     for index, raw in enumerate(records):
+        title = raw.get("title")
+        if not title:
+            continue
+        max_problems = int(raw.get("max_problems", DEFAULT_CONTEST_PROBLEMS) or DEFAULT_CONTEST_PROBLEMS)
+        max_problems = max(max_problems, 0)
         status_raw = raw.get("status") or {}
-        status = {
+        status_defaults = {
             "user_one": int(status_raw.get("user_one", 0) or 0),
             "user_two": int(status_raw.get("user_two", 0) or 0),
         }
-        max_problems = int(raw.get("max_problems", DEFAULT_CONTEST_PROBLEMS) or DEFAULT_CONTEST_PROBLEMS)
-        max_problems = max(max_problems, 0)
+        for key, value in status_defaults.items():
+            status_defaults[key] = max(0, min(value, max_problems))
 
+        query = {
+            "category": CONTEST_CATEGORY,
+            "title": title,
+        }
         document = {
             "category": CONTEST_CATEGORY,
             "order": raw.get("order", index + 1),
-            "title": raw.get("title"),
+            "title": title,
             "contest_link": raw.get("contest_link"),
             "max_problems": max_problems,
-            "status": status,
         }
 
         collection.update_one(
+            query,
             {
-                "category": CONTEST_CATEGORY,
-                "title": document["title"],
+                "$set": document,
+                "$setOnInsert": {"status": status_defaults},
             },
-            {"$set": document},
             upsert=True,
         )
+        valid_titles.add(title)
+
+    if valid_titles:
+        collection.delete_many({"category": CONTEST_CATEGORY, "title": {"$nin": list(valid_titles)}})
 
 
 def get_contest_entries(collection) -> List[Dict]:
