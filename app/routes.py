@@ -78,7 +78,10 @@ def contest_tracker():
     category = "contest_tracker"
 
     data_path = Path(current_app.root_path) / "static" / "data" / "contest_tracker.json"
-    ensure_contests_seeded(collection, data_path)
+    try:
+        ensure_contests_seeded(collection, data_path)
+    except FileNotFoundError:
+        current_app.logger.warning("Contest seed file missing at %s; proceeding with existing data", data_path)
 
     entries = get_contest_entries(collection)
     dashboard = build_contest_dashboard(collection)
