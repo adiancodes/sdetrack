@@ -3,14 +3,13 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>SDE Tracker</title>
+    <title>Contest Tracker</title>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
-    <!-- Readable, modern font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -45,12 +44,12 @@
     </nav>
 
     <main class="container py-4">
-  <section class="row g-3" id="dashboard-section">
+      <section class="row g-3" id="dashboard-section">
         <div class="col-md-6">
           <div class="card bg-secondary-subtle h-100 text-light" data-user-card="user_one" style="--card-bg: url('{{ url_for('static', filename='img/dashboard-bg.jpg') }}');">
             <div class="card-body">
               <h5 class="card-title">{{ user_one_name }}</h5>
-              <p class="card-text small text-uppercase text-white">Mine progress</p>
+              <p class="card-text small text-uppercase text-white">Contest progress</p>
               {% set total = dashboard['user_one']['total'] or 1 %}
               {% set completed = dashboard['user_one']['completed'] %}
               {% set percent = (completed / total * 100) | round(1) %}
@@ -66,20 +65,11 @@
                 ></div>
               </div>
               <p class="lead mb-2">
-                <span data-progress-completed="user_one">{{ completed }}</span> / <span data-progress-total>{{ dashboard['user_one']['total'] }}</span>
+                <span data-progress-completed="user_one">{{ completed }}</span>
+                /
+                <span data-progress-total>{{ dashboard['user_one']['total'] }}</span>
               </p>
-              <ul class="dashboard-legend list-inline mb-0" data-difficulty-list="user_one">
-                {% for difficulty, stats in dashboard['user_one']['difficulty'].items() %}
-                <li class="list-inline-item">
-                  <span class="badge rounded-pill {{ difficulty|lower }}">{{ difficulty }}</span>
-                  <span class="count">
-                    <span data-difficulty-completed="{{ difficulty }}">{{ stats['completed'] }}</span>
-                    /
-                    <span data-difficulty-total="{{ difficulty }}">{{ stats['total'] }}</span>
-                  </span>
-                </li>
-                {% endfor %}
-              </ul>
+              <p class="small text-muted mb-0">Tracking {{ dashboard['metadata']['contest_count'] }} contests</p>
             </div>
           </div>
         </div>
@@ -87,7 +77,7 @@
           <div class="card bg-secondary-subtle h-100 text-light" data-user-card="user_two" style="--card-bg: url('{{ url_for('static', filename='img/dashboard-bg.jpg') }}');">
             <div class="card-body">
               <h5 class="card-title">{{ user_two_name }}</h5>
-              <p class="card-text small text-uppercase text-white">Didi's progress</p>
+              <p class="card-text small text-uppercase text-white">Contest progress</p>
               {% set total = dashboard['user_two']['total'] or 1 %}
               {% set completed = dashboard['user_two']['completed'] %}
               {% set percent = (completed / total * 100) | round(1) %}
@@ -103,20 +93,11 @@
                 ></div>
               </div>
               <p class="lead mb-2">
-                <span data-progress-completed="user_two">{{ completed }}</span> / <span data-progress-total>{{ dashboard['user_two']['total'] }}</span>
+                <span data-progress-completed="user_two">{{ completed }}</span>
+                /
+                <span data-progress-total>{{ dashboard['user_two']['total'] }}</span>
               </p>
-              <ul class="dashboard-legend list-inline mb-0" data-difficulty-list="user_two">
-                {% for difficulty, stats in dashboard['user_two']['difficulty'].items() %}
-                <li class="list-inline-item">
-                  <span class="badge rounded-pill {{ difficulty|lower }}">{{ difficulty }}</span>
-                  <span class="count">
-                    <span data-difficulty-completed="{{ difficulty }}">{{ stats['completed'] }}</span>
-                    /
-                    <span data-difficulty-total="{{ difficulty }}">{{ stats['total'] }}</span>
-                  </span>
-                </li>
-                {% endfor %}
-              </ul>
+              <p class="small text-muted mb-0">Tracking {{ dashboard['metadata']['contest_count'] }} contests</p>
             </div>
           </div>
         </div>
@@ -124,84 +105,70 @@
 
       <hr class="border-secondary my-4" />
 
-      {% for day in grouped_questions %}
-      <section class="mb-4 day-section" data-day="{{ day['day'] }}">
-        <button
-          class="day-toggle collapsed d-flex justify-content-between align-items-center w-100 mb-2"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#day-{{ day['day'] }}"
-          aria-expanded="false"
-          aria-controls="day-{{ day['day'] }}"
-        >
-          <span class="d-flex align-items-center gap-2">
-            <span class="chevron" aria-hidden="true"></span>
-            <h2 class="h5 mb-0">{{ day['label'] }}</h2>
-          </span>
-          <span class="badge bg-warning text-dark">{{ day['questions']|length }} questions</span>
-        </button>
-        <div id="day-{{ day['day'] }}" class="collapse" data-day-body>
-          <div class="table-responsive">
+      <section class="day-section">
+        <div class="table-responsive">
           <table class="table table-dark table-striped align-middle mb-0">
             <thead>
               <tr>
                 <th scope="col" style="width: 60px;">#</th>
-                <th scope="col">Problem</th>
-                <th scope="col">Difficulty</th>
-                <th scope="col" style="width: 100px;">{{ user_one_name }}</th>
-                <th scope="col" style="width: 100px;">{{ user_two_name }}</th>
-                <th scope="col">Resources</th>
+                <th scope="col">Contest</th>
+                <th scope="col" style="width: 160px;">Virtual Contest</th>
+                <th scope="col" style="width: 150px;">Max Problems</th>
+                <th scope="col" style="width: 180px;">Solved ({{ user_one_name }})</th>
+                <th scope="col" style="width: 180px;">Solved ({{ user_two_name }})</th>
               </tr>
             </thead>
             <tbody>
-              {% for question in day['questions'] %}
-              <tr data-question-id="{{ question['id'] }}">
+              {% for contest in contests %}
+              <tr data-contest-id="{{ contest['id'] }}">
                 <td>{{ loop.index }}</td>
+                <td class="fw-semibold">{{ contest['title'] }}</td>
                 <td>
-                  <div class="fw-semibold">{{ question['title'] }}</div>
-                  {% if question.get('notes') %}
-                  <div class="small text-muted">{{ question['notes'] }}</div>
+                  {% if contest.get('contest_link') %}
+                  <a class="btn btn-sm btn-outline-light" href="{{ contest['contest_link'] }}" target="_blank" rel="noopener">Virtual Link</a>
+                  {% else %}
+                  <span class="text-muted">-</span>
                   {% endif %}
                 </td>
                 <td>
-                  <span class="badge rounded-pill {{ question['difficulty']|lower }}">{{ question['difficulty'] }}</span>
+                  <span class="badge bg-info text-dark">{{ contest['max_problems'] }}</span>
                 </td>
                 <td>
                   <input
-                    class="form-check-input status-checkbox"
-                    type="checkbox"
-                    {% if question['status'].get('user_one') %}checked{% endif %}
+                    type="number"
+                    inputmode="numeric"
+                    pattern="[0-9]*"
+                    min="0"
+                    step="1"
+                    max="{{ contest['max_problems'] }}"
+                    class="form-control form-control-sm text-center contest-solved-input"
+                    value="{{ contest['status'].get('user_one', 0)|int }}"
                     data-user-field="user_one"
-                    aria-label="{{ user_one_name }} completion"
+                    data-max-problems="{{ contest['max_problems'] }}"
+                    aria-label="{{ user_one_name }} solved count for {{ contest['title'] }}"
                   />
                 </td>
                 <td>
                   <input
-                    class="form-check-input status-checkbox"
-                    type="checkbox"
-                    {% if question['status'].get('user_two') %}checked{% endif %}
+                    type="number"
+                    inputmode="numeric"
+                    pattern="[0-9]*"
+                    min="0"
+                    step="1"
+                    max="{{ contest['max_problems'] }}"
+                    class="form-control form-control-sm text-center contest-solved-input"
+                    value="{{ contest['status'].get('user_two', 0)|int }}"
                     data-user-field="user_two"
-                    aria-label="{{ user_two_name }} completion"
+                    data-max-problems="{{ contest['max_problems'] }}"
+                    aria-label="{{ user_two_name }} solved count for {{ contest['title'] }}"
                   />
-                </td>
-                <td>
-                  <div class="d-flex gap-2">
-                    {% if question.get('practice_link') %}
-                    <a class="btn btn-sm btn-outline-light" href="{{ question['practice_link'] }}" target="_blank" rel="noopener">Practice</a>
-                    {% endif %}
-                    {% if question.get('editorial_link') %}
-                    <a class="btn btn-sm btn-outline-warning" href="{{ question['editorial_link'] }}" target="_blank" rel="noopener">Editorial</a>
-                    {% endif %}
-                  </div>
                 </td>
               </tr>
               {% endfor %}
             </tbody>
           </table>
-          </div>
         </div>
       </section>
-      {% endfor %}
     </main>
 
     <script>

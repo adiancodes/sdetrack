@@ -1,9 +1,13 @@
 (() => {
   const category = (window.APP_CATEGORY || 'striver').toLowerCase();
   const socket = io({ query: { category } });
+  const isContestTracker = category === 'contest_tracker';
 
   const getRowByQuestionId = (questionId) =>
     document.querySelector(`tr[data-question-id="${questionId}"]`);
+
+  const getContestRow = (contestId) =>
+    document.querySelector(`tr[data-contest-id="${contestId}"]`);
 
   const updateCheckboxState = (question, userField) => {
     const row = getRowByQuestionId(question.id);
@@ -75,6 +79,32 @@
     });
   };
 
+  const updateContestInputState = (contest, userField) => {
+    const row = getContestRow(contest.id);
+    if (!row) {
+      return;
+    }
+    const input = row.querySelector(`.contest-solved-input[data-user-field="${userField}"]`);
+    if (!input) {
+      return;
+    }
+    const parsedMax = parseInt(input.getAttribute('data-max-problems') || '0', 10);
+    const max = Number.isFinite(parsedMax) ? Math.max(parsedMax, 0) : 0;
+    const value = Number(contest?.status?.[userField]);
+    if (Number.isFinite(value)) {
+      const clamped = Math.min(Math.max(Math.round(value), 0), max);
+      input.value = String(clamped);
+    }
+  };
+
+  const clampSolvedValue = (value, min, max) => {
+    const numeric = Number(value);
+    if (!Number.isFinite(numeric)) {
+      return min;
+    }
+    return Math.min(Math.max(Math.round(numeric), min), max);
+  };
+
   const handleCheckboxChange = (event) => {
     const checkbox = event.target;
     if (!(checkbox instanceof HTMLInputElement) || checkbox.type !== 'checkbox') {
@@ -136,6 +166,47 @@
     checkbox.addEventListener('change', handleCheckboxChange);
   });
 
+  const handleContestInputChange = (event) => {
+    const input = event.target;
+    if (!(input instanceof HTMLInputElement)) {
+      return;
+    }
+    const row = input.closest('tr[data-contest-id]');
+    if (!row) {
+      return;
+    }
+    const contestId = row.getAttribute('data-contest-id');
+    const userField = input.getAttribute('data-user-field');
+    if (!contestId || !userField) {
+      return;
+    }
+    const max = parseInt(input.getAttribute('data-max-problems') || '0', 10) || 0;
+    const value = clampSolvedValue(input.value, 0, max || 0);
+    input.value = String(value);
+
+    socket.emit('update_contest_solved', {
+      contest_id: contestId,
+      user_field: userField,
+      solved: value,
+      category,
+    });
+  };
+
+  if (isContestTracker) {
+    const inputs = document.querySelectorAll('.contest-solved-input');
+    inputs.forEach((input) => {
+      input.addEventListener('change', handleContestInputChange);
+      input.addEventListener('blur', handleContestInputChange);
+      input.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+          handleContestInputChange(event);
+          event.preventDefault();
+          input.blur();
+        }
+      });
+    });
+  }
+
   socket.on('status_updated', ({ question, user_field: userField, category: updateCategory }) => {
     if (!question || !userField) {
       return;
@@ -149,6 +220,17 @@
   socket.on('dashboard_sync', (payload) => {
     if (payload?.category && payload.category !== category) {
       return;
+    }
+    updateDashboard(payload);
+  });
+
+  socket.on('contest_progress_updated', (payload) => {
+    if (!payload || payload.category !== category) {
+      return;
+    }
+    const { contest, user_field: userField } = payload;
+    if (contest && userField) {
+      updateContestInputState(contest, userField);
     }
     updateDashboard(payload);
   });

@@ -33,6 +33,12 @@
           >
             Binary Search Questions
           </a>
+          <a
+            class="btn btn-sm {% if active_page == 'contest_tracker' %}btn-warning text-dark{% else %}btn-outline-light{% endif %}"
+            href="{{ url_for('main.contest_tracker') }}"
+          >
+            Contest Tracker
+          </a>
         </div>
       </div>
     </nav>
@@ -51,7 +57,7 @@
                 <div
                   class="progress-bar bg-success"
                   role="progressbar"
-                  style="width: {{ percent }}%;"
+                  style="width: 0%"
                   data-progress-bar="user_one"
                   aria-valuenow="{{ percent }}"
                   aria-valuemin="0"
@@ -88,7 +94,7 @@
                 <div
                   class="progress-bar bg-primary"
                   role="progressbar"
-                  style="width: {{ percent }}%;"
+                  style="width: 0%"
                   data-progress-bar="user_two"
                   aria-valuenow="{{ percent }}"
                   aria-valuemin="0"

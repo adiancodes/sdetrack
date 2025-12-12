@@ -8,6 +8,8 @@ from bson import ObjectId
 
 
 DEFAULT_CATEGORY = "striver"
+CONTEST_CATEGORY = "contest_tracker"
+DEFAULT_CONTEST_PROBLEMS = 4
 
 
 def _normalize_category(category: Optional[str]) -> str:
@@ -176,3 +178,128 @@ def ensure_category_seeded(collection, category: str, data_path: Path) -> None:
             "title": document["title"],
         }
         collection.update_one(query, {"$set": document}, upsert=True)
+
+
+def ensure_contests_seeded(collection, data_path: Path) -> None:
+    """Seed contest tracker entries from JSON if none exist."""
+    existing = collection.count_documents({"category": CONTEST_CATEGORY})
+    if existing:
+        return
+
+    path = Path(data_path)
+    if not path.exists():
+        raise FileNotFoundError(f"Contest seed file not found: {path}")
+
+    with path.open("r", encoding="utf-8") as handle:
+        records = json.load(handle)
+
+    if not isinstance(records, list):
+        raise ValueError("Contest seed file must be a list of contest entries.")
+
+    for index, raw in enumerate(records):
+        status_raw = raw.get("status") or {}
+        status = {
+            "user_one": int(status_raw.get("user_one", 0) or 0),
+            "user_two": int(status_raw.get("user_two", 0) or 0),
+        }
+        max_problems = int(raw.get("max_problems", DEFAULT_CONTEST_PROBLEMS) or DEFAULT_CONTEST_PROBLEMS)
+        max_problems = max(max_problems, 0)
+
+        document = {
+            "category": CONTEST_CATEGORY,
+            "order": raw.get("order", index + 1),
+            "title": raw.get("title"),
+            "contest_link": raw.get("contest_link"),
+            "max_problems": max_problems,
+            "status": status,
+        }
+
+        collection.update_one(
+            {
+                "category": CONTEST_CATEGORY,
+                "title": document["title"],
+            },
+            {"$set": document},
+            upsert=True,
+        )
+
+
+def get_contest_entries(collection) -> List[Dict]:
+    """Return contest tracker entries ordered by their configured rank."""
+    cursor = collection.find({"category": CONTEST_CATEGORY}, sort=[("order", 1), ("title", 1)])
+    entries: List[Dict] = []
+    for doc in cursor:
+        doc_id = doc.pop("_id", None)
+        if doc_id is not None:
+            doc["id"] = str(doc_id)
+        status = doc.setdefault("status", {"user_one": 0, "user_two": 0})
+        max_problems = int(doc.get("max_problems", DEFAULT_CONTEST_PROBLEMS) or DEFAULT_CONTEST_PROBLEMS)
+        max_problems = max(max_problems, 0)
+        doc["max_problems"] = max_problems
+        for key in ("user_one", "user_two"):
+            value = int(status.get(key, 0) or 0)
+            status[key] = max(0, min(value, max_problems))
+        doc["category"] = CONTEST_CATEGORY
+        entries.append(doc)
+    return entries
+
+
+def build_contest_dashboard(collection) -> Dict:
+    """Aggregate contest progress for both users in dashboard format."""
+    entries = get_contest_entries(collection)
+    user_one_total = 0
+    user_one_completed = 0
+    user_two_total = 0
+    user_two_completed = 0
+
+    for entry in entries:
+        max_problems = entry.get("max_problems", DEFAULT_CONTEST_PROBLEMS) or DEFAULT_CONTEST_PROBLEMS
+        user_one_total += max_problems
+        user_two_total += max_problems
+        status = entry.get("status", {})
+        user_one_completed += int(status.get("user_one", 0) or 0)
+        user_two_completed += int(status.get("user_two", 0) or 0)
+
+    return {
+        "user_one": {
+            "total": user_one_total,
+            "completed": user_one_completed,
+            "difficulty": {},
+        },
+        "user_two": {
+            "total": user_two_total,
+            "completed": user_two_completed,
+            "difficulty": {},
+        },
+        "metadata": {
+            "contest_count": len(entries),
+        },
+    }
+
+
+def update_contest_solved(collection, contest_id: str, user_field: str, solved: int) -> Dict:
+    """Persist solved count for a contest entry and return the updated document."""
+    if user_field not in {"user_one", "user_two"}:
+        return {}
+
+    obj_id = ObjectId(contest_id)
+    existing = collection.find_one({"_id": obj_id, "category": CONTEST_CATEGORY})
+    if not existing:
+        return {}
+
+    max_problems = int(existing.get("max_problems", DEFAULT_CONTEST_PROBLEMS) or DEFAULT_CONTEST_PROBLEMS)
+    max_problems = max(max_problems, 0)
+    value = int(solved or 0)
+    value = max(0, min(value, max_problems))
+
+    collection.update_one({"_id": obj_id}, {"$set": {f"status.{user_field}": value}})
+    updated = collection.find_one({"_id": obj_id})
+    if not updated:
+        return {}
+
+    updated["id"] = str(updated.pop("_id"))
+    status = updated.setdefault("status", {"user_one": 0, "user_two": 0})
+    status[user_field] = value
+    updated.setdefault("max_problems", max_problems)
+    updated["category"] = CONTEST_CATEGORY
+    return updated

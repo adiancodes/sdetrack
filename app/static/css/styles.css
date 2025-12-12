@@ -58,6 +58,19 @@ body {
   transform: scale(1.2);
 }
 
+.contest-solved-input {
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #f5f5f5;
+}
+
+.contest-solved-input:focus {
+  background-color: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.35);
+  color: #ffffff;
+  box-shadow: 0 0 0 0.15rem rgba(255, 255, 255, 0.15);
+}
+
 /* Progress cards: improve contrast */
 .card [data-progress-bar] {
   background-color: #ffffff !important; /* white bar color */
